@@ -2,10 +2,12 @@
 
 **AI you can trust.**
 
-A flight recorder for AI coding agents on macOS. IAXT observes what
-Claude Code, Cursor, Aider, and every other CLI agent actually does
-on your machine: every command run, every file touched. You get a
-post-session review in one click.
+A flight recorder for AI coding agents on macOS. IAXT passively records
+what Claude Code, Cursor, Aider, Codex, and other CLI agents actually do
+on your machine: every command run, file touched, package installed, git
+operation, and launch agent. It never blocks or changes anything. You
+review it after the session, in a clear log where each action is
+attributed to its agent and scored for severity.
 
 This repository hosts the release downloads and the issue tracker.
 Learn more at [iaxt.com](https://iaxt.com).
@@ -42,6 +44,25 @@ the app installs nothing else.
 - All data stays on your machine, in a local SQLite database and
   daily JSONL logs at `~/Library/Logs/IAXT/`, openable with
   `sqlite3` and deletable with `rm -rf`.
+
+---
+
+## What IAXT does not do
+
+An audit tool is only worth the trust it earns, so the limits are
+stated plainly:
+
+- **It does not block.** IAXT is a recorder, not a firewall. It never
+  intercepts or changes what an agent does; it lets you review after
+  the fact.
+- **It logs that a file changed, not what changed.** Use `git diff`
+  for the contents.
+- **It watches writes, not reads.** A silent read of `~/.ssh/id_rsa`
+  is invisible unless the agent then uses it (a `curl`, a commit, a
+  POST).
+- **It cannot see remote-sandbox work.** Agents that run in the cloud
+  (Claude Cowork, ChatGPT Code Interpreter, Devin, Replit) leave no
+  local trace, so that work is out of scope.
 
 ---
 
